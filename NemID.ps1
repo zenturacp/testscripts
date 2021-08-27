@@ -1,6 +1,6 @@
-$Url = 'https://bc365v834p.blob.core.windows.net/software/nemid/20200424/nemid.exe?st=2020-04-24T05%3A48%3A33Z&se=2030-04-25T05%3A48%3A00Z&sp=rl&sv=2018-03-28&sr=b&sig=tFyn0xBFKF6KdI3u%2FddmOu%2FhBCV3zYxlh5nb73Ix%2Fcg%3D'
+$Url = 'https://bc365v834p.blob.core.windows.net/software/nemid/nemid.zip?sp=r&st=2021-08-27T09:17:31Z&se=2031-08-27T17:17:31Z&spr=https&sv=2020-08-04&sr=b&sig=yHHj9Z%2Bwc%2Fn3UOOGXDYCAPaGj0MsQGnMVtiMevLo60A%3D'
 $Product = 'NemID'
-$SetupFile = 'nemid.exe'
+$ArchiveFile = 'nemid.zip'
 
 $installers = @(
     "csp.msi",
@@ -11,30 +11,25 @@ $installers = @(
 $InstallTempFolder = "D:\Install-$(Get-Random -Minimum 10000 -Maximum 99999)"
 $CurrentDir = Get-Location
 
-if (!(Test-Path $InstallTempFolder))
-{
+if (!(Test-Path $InstallTempFolder)) {
     new-item -ItemType Directory -Force -Path $InstallTempFolder | Out-Null
 }
 
-Write-Host "$Product`: Downloading installer to $InstallTempFolder\$SetupFile"
-(New-Object System.Net.WebClient).DownloadFile($Url, "$InstallTempFolder\$SetupFile")
+Write-Host "$Product`: Downloading installer to $InstallTempFolder\$ArchiveFile"
+(New-Object System.Net.WebClient).DownloadFile($Url, "$InstallTempFolder\$ArchiveFile")
 
-if (!(Test-Path "$InstallTempFolder\$SetupFile"))
-{
+if (!(Test-Path "$InstallTempFolder\$ArchiveFile")) {
     Write-Error "$Product`: installer not downloaded"
     exit 1
 }
 
 Set-Location $InstallTempFolder
 
-Write-Host "$Product`: Extracting files from $SetupFile to $InstallTempFolder"
-Start-Process -FilePath "$InstallTempFolder\$SetupFile" -Argumentlist "-o$InstallTempFolder -y" -NoNewWindow -Wait
+Write-Host "$Product`: Extracting files from $ArchiveFile to $InstallTempFolder"
+Expand-Archive -Path "$InstallTempFolder\$ArchiveFile" -DestinationPath $InstallTempFolder
 
-
-if (Test-Path "$InstallTempFolder\$SetupFile")
-{
-    foreach ($installer in $installers)
-    {
+if (Test-Path "$InstallTempFolder\$ArchiveFile") {
+    foreach ($installer in $installers) {
         Write-Host "$Product`: Starting installer $installer"
         Start-Process -FilePath "msiexec.exe" -WorkingDirectory $InstallTempFolder -Argumentlist "/i `"$installer`" /qn" -NoNewWindow -Wait
     }
