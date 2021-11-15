@@ -1,4 +1,4 @@
-$Url = 'https://bc365v834p.blob.core.windows.net/software/onedrive/19.232.1124.10/OneDriveSetup.exe?st=2020-04-14T09%3A39%3A22Z&se=2030-04-15T09%3A39%3A00Z&sp=rl&sv=2018-03-28&sr=b&sig=lSctxAcSgJna3%2BJtC3ZO4gK0lKmeOm%2BgAhHZVlHRoOw%3D'
+$Url = 'https://bc365v834p.blob.core.windows.net/software/onedrive/21.205.1003.3/OneDriveSetup.exe?sv=2020-04-08&st=2021-11-15T07%3A31%3A15Z&se=2031-11-16T07%3A31%3A00Z&sr=b&sp=r&sig=jI8wc0rFeybetVwHn4heYLZr6TXsyGPdFlMv0mqMg30%3D'
 $Product = 'OneDrive'
 $SetupFile = 'OneDriveSetup.exe'
 $SetupArguments = @(

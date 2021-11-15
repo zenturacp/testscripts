@@ -1,30 +1,28 @@
-$Url = 'https://bc365v834p.blob.core.windows.net/software/office365/ODTBusiness.exe?st=2020-05-06T11%3A30%3A48Z&se=2030-05-07T11%3A30%3A00Z&sp=rl&sv=2018-03-28&sr=b&sig=iqb5Qz6LMlnrA0D27IZetesVKmkCP1qna2huKTfFdHg%3D'
+$Url = 'https://bc365v834p.blob.core.windows.net/software/office365/ODTBusiness.zip?sv=2020-04-08&st=2021-11-15T07%3A26%3A12Z&se=2031-11-16T07%3A26%3A00Z&sr=b&sp=r&sig=HhaO0NgeUADqNRyJ%2FltRKn13a78mDsm%2Bf0kBVEgXwuM%3D'
 $Product = 'Office365 Business'
-$SetupFile = 'ODTBusiness.exe'
+$ArchiveFile = 'ODTBusiness.zip'
 
 $InstallTempFolder = "D:\Install-$(Get-Random -Minimum 10000 -Maximum 99999)"
 $CurrentDir = Get-Location
 
-if (!(Test-Path $InstallTempFolder))
-{
+if (!(Test-Path $InstallTempFolder)) {
     new-item -ItemType Directory -Force -Path $InstallTempFolder | Out-Null
 }
 
-Write-Host "Downloading $Product installer to $InstallTempFolder\$SetupFile"
-(New-Object System.Net.WebClient).DownloadFile($Url, "$InstallTempFolder\$SetupFile")
+Write-Host "$Product`: Downloading installer to $InstallTempFolder\$ArchiveFile"
+(New-Object System.Net.WebClient).DownloadFile($Url, "$InstallTempFolder\$ArchiveFile")
 
-if (!(Test-Path "$InstallTempFolder\$SetupFile"))
-{
-    Write-Error "$Product installer not downloaded"
+if (!(Test-Path "$InstallTempFolder\$ArchiveFile")) {
+    Write-Error "$Product`: installer not downloaded"
     exit 1
 }
 
 Set-Location $InstallTempFolder
 
-Write-Host "Extracting files from $InstallTempFolder\$SetupFile"
-Start-Process -FilePath $InstallTempFolder\$SetupFile -Argumentlist "-o$InstallTempFolder -y" -NoNewWindow -Wait
+Write-Host "$Product`: Extracting files from $ArchiveFile to $InstallTempFolder"
+Expand-Archive -Path "$InstallTempFolder\$ArchiveFile" -DestinationPath $InstallTempFolder
 
-if (Test-Path "$InstallTempFolder\$SetupFile")
+if (Test-Path "$InstallTempFolder\setup.exe")
 {
     Write-Host "$Product`: Downloading files for installer"
     Start-Process -FilePath "$InstallTempFolder\setup.exe" -WorkingDirectory $InstallTempFolder -Argumentlist "/download configuration-Office365-x64.xml" -NoNewWindow -Wait
