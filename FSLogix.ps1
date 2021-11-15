@@ -1,7 +1,7 @@
 $Url = 'https://bc365v834p.blob.core.windows.net/software/fslogix/2.9.7979.62170/x64/Release/FSLogixAppsSetup.exe?sv=2020-04-08&st=2021-11-15T07%3A20%3A38Z&se=2031-11-16T07%3A20%3A00Z&sr=b&sp=r&sig=KMdqreYoWJiaVRdyxiqO09JFfgBwF4FzXxN1SM%2BzLGA%3D'
 $Product = 'FSLogix'
 $SetupFile = 'FSLogixAppsSetup.exe'
-$VHDLocation = '\\mftas1003profilespremium.file.core.windows.net\profiles'
+$VHDLocation = '\\wlhvx1003profiles.file.core.windows.net\profiles\desktop'
 $SetupArguments = @(
     "/install",
     "/quiet",
