@@ -111,7 +111,9 @@ New-ItemProperty -LiteralPath "HKLM:\SOFTWARE\Policies\Microsoft\office\16.0\com
 New-ItemProperty -LiteralPath "HKLM:\SOFTWARE\Policies\Microsoft\office\16.0\common\officeupdate" -Name "hideupdatenotifications" -Value 1 -PropertyType DWord -Force -ea SilentlyContinue;
 
 # Unload default profile again
+Start-Sleep -Seconds 10
 reg unload "HKU\$keyName"
+Start-Sleep -Seconds 10
 Remove-PSDrive -Name "HKU"
 
 Remove-Item -Path $InstallTempFolder -Recurse -Force

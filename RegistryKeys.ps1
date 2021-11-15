@@ -41,5 +41,7 @@ New-Item -Path "HKU:\$keyName\Software\Policies\Microsoft\Windows\CurrentVersion
 Set-ItemProperty -Path "HKU:\$keyName\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\1" -Name "2103" -Value 0 -Type DWord
 
 # Unload default profile again
+Start-Sleep -Seconds 10
 reg unload "HKU\$keyName"
+Start-Sleep -Seconds 10
 Remove-PSDrive -Name "HKU"
